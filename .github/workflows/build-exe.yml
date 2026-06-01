@@ -13,18 +13,12 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Build Windows EXE
-        run: python build_exe.py
-      - name: Upload Windows
-        uses: actions/upload-artifact@v3
+      - run: python -m pip install -r requirements.txt
+      - run: python build_exe.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: NURI-Windows-EXE
+          name: NURI-Windows
           path: dist/NURI.exe
-          retention-days: 30
 
   build-linux:
     runs-on: ubuntu-latest
@@ -33,18 +27,12 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Build Linux Binary
-        run: python build_exe.py
-      - name: Upload Linux
-        uses: actions/upload-artifact@v3
+      - run: python -m pip install -r requirements.txt
+      - run: python build_exe.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: NURI-Linux-Binary
+          name: NURI-Linux
           path: dist/NURI
-          retention-days: 30
 
   build-macos:
     runs-on: macos-latest
@@ -53,15 +41,9 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Build macOS Binary
-        run: python build_exe.py
-      - name: Upload macOS
-        uses: actions/upload-artifact@v3
+      - run: python -m pip install -r requirements.txt
+      - run: python build_exe.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: NURI-macOS-Binary
+          name: NURI-macOS
           path: dist/NURI
-          retention-days: 30
