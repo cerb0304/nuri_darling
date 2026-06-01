@@ -19,7 +19,7 @@ jobs:
         run: pip install pyinstaller groq google-genai edge-tts vosk pyautogui aiohttp aiogram python-dotenv PyQt5 sounddevice scipy
 
       - name: Build EXE
-        run: pyinstaller --onefile --noconsole --name=NURI --hidden-import=ai_engine --hidden-import=memory_module --hidden-import=identity_engine --hidden-import=voice_engine --hidden-import=keyboard_module --hidden-import=telegram_module --hidden-import=permissions --collect-all=groq --collect-all=aiogram --collect-all=edge_tts --collect-all=vosk app.py
+        run: pyinstaller --onefile --noconsole --name=NURI --add-data="ai_engine.py;." --add-data="memory_module.py;." --add-data="identity_engine.py;." --add-data="voice_engine.py;." --add-data="keyboard_module.py;." --add-data="telegram_module.py;." --add-data="permissions.py;." --collect-all=groq --collect-all=google --collect-all=aiogram --collect-all=edge_tts --collect-all=vosk --collect-all=aiohttp --collect-all=dotenv app.py
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
