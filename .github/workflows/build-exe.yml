@@ -1,0 +1,39 @@
+name: Build EXE
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        python-version: ['3.11']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build EXE
+      run: python build_exe.py
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: NURI-${{ matrix.os }}
+        path: dist/
+        retention-days: 30
