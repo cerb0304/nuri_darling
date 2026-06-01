@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 NURI EXE build skripti
 PyInstaller orqali standalone exe faylini yaratadi
@@ -24,7 +25,7 @@ def build_exe():
     print("NURI EXE YASALMOQDA...")
     print("="*50 + "\n")
     
-    # PyInstaller parametrlari (to'g'rilangan)
+    # PyInstaller parametrlari
     args = [
         'gui.py',  # asosiy entry point
         '--name=NURI',
@@ -55,12 +56,12 @@ def build_exe():
     try:
         PyInstaller.__main__.run(args)
         print("\n" + "="*50)
-        print("✅ EXE MUVAFFAQIYATLI YARATILDI!")
-        print(f"📁 Joylashuvi: dist/NURI.exe")
+        print("SUCCESS: EXE file created successfully!")
+        print("Location: dist/NURI.exe")
         print("="*50 + "\n")
         return True
     except Exception as e:
-        print(f"\n❌ XATOLIK: {e}")
+        print(f"\nERROR: {e}")
         import traceback
         traceback.print_exc()
         return False
