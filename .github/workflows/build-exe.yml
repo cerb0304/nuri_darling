@@ -1,39 +1,67 @@
-name: Build EXE
+name: Build NURI EXE
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-        python-version: ['3.11']
-
+  build-windows:
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Build Windows EXE
+        run: python build_exe.py
+      - name: Upload Windows
+        uses: actions/upload-artifact@v3
+        with:
+          name: NURI-Windows-EXE
+          path: dist/NURI.exe
+          retention-days: 30
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Build Linux Binary
+        run: python build_exe.py
+      - name: Upload Linux
+        uses: actions/upload-artifact@v3
+        with:
+          name: NURI-Linux-Binary
+          path: dist/NURI
+          retention-days: 30
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Build EXE
-      run: python build_exe.py
-
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: NURI-${{ matrix.os }}
-        path: dist/
-        retention-days: 30
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Build macOS Binary
+        run: python build_exe.py
+      - name: Upload macOS
+        uses: actions/upload-artifact@v3
+        with:
+          name: NURI-macOS-Binary
+          path: dist/NURI
+          retention-days: 30
