@@ -8,6 +8,8 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
@@ -22,6 +24,8 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
@@ -36,6 +40,8 @@ jobs:
 
   build-macos:
     runs-on: macos-latest
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
